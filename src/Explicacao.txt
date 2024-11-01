@@ -1,0 +1,21 @@
+A ideia principal é permitir que uma série de middleware sejam encadeadas, onde cada uma delas pode processar
+a solicitação de login e decidir se deve passar a verificação para o próximo middleware ou interromper o processo.
+
+No parte principal a classe abstrata Middleware que define uma interface para as verificações e um método para encadear 
+as instâncias de middleware. Isso permite que diferentes verificações sejam conectadas em uma sequência. Tendo três 
+subclasses: 
+
+ThrottlingMiddleware, que limita o número de tentativas de login em um minuto, bloqueando solicitações adicionais.
+
+UserExistsMiddleware, verifica se o e-mail fornecido está registrado e se a senha correspondente é válida.
+
+RoleCheckMiddleware, que identifica o papel do usuário, e caso seja administrador imprime uma mensagem própria.
+
+A classe Server gerencia os usuários e as tentativas de login, recebendo a cadeia de middleware configurada. Quando 
+um usuário tenta fazer login, as credenciais são passadas através da cadeia de verificações, que decide se a autenticação 
+deve continuar ou não.
+
+E a classe Demo configura o servidor e as verificações, permitindo que um usuário insira seu e-mail e senha. 
+Dependendo das credenciais, o sistema retorna mensagens sobre o sucesso ou falha do login, demonstrando a flexibilidade 
+e modularidade do código. Esse padrão de design não apenas organiza a lógica de autenticação de forma clara, mas também 
+facilita novas verificações futuras.
